@@ -97,11 +97,6 @@ const App = () => {
           </p>
         </div>
       </main>
-      <footer className="bg-white w-4/5 sm:w-2/3 m-auto">
-        <div className="p-3">
-          <p className="text-center text-gray-600 mt-4">Conversor de dolar a pesos para compras al exterior</p>
-        </div>
-      </footer>
     </div>
   )
 }
