@@ -1,38 +1,28 @@
 import React, { useEffect, useState } from 'react'
+import getDollarPrice from './services/getDollarPrice'
+import computeTaxes from './services/computeTaxes'
 
 const App = () => {
-  const [dolar, setDolar] = useState({})
+  const [dollarData, setDolarData] = useState({})
   const [toConvert, setToConvert] = useState({
     amount: 0,
   })
 
-  const resultInitialState = { preTotal: 0, firstTax: 0, secondTax: 0, finalAmount: 0 }
+  const resultInitialState = { preTotal: 0, paisTax: 0, afipTax: 0, finalAmount: 0 }
   const [result, setResult] = useState(resultInitialState)
 
   const { amount } = toConvert
-  const { preTotal = 0, firstTax = 0, secondTax = 0, finalAmount = 0 } = result
+  const { preTotal = 0, paisTax = 0, afipTax = 0, finalAmount = 0 } = result
 
   useEffect(() => {
-    if (Object.keys(dolar) == 0) {
-      getDolar()
-    }
-
-    if (amount !== 0) {
-      compute(amount)
+    if (Object.keys(dollarData).length === 0) {
+      Promise.resolve(getDollarPrice())
+        .then(data => setDolarData(data))
+        .catch(err => console.log(err))
+    } else if (amount !== 0) {
+      setResult(computeTaxes({ amount, dollarData }))
     }
   }, [amount])
-
-  const getDolar = async () => {
-    const values = await fetch('https://www.dolarsi.com/api/api.php?type=valoresprincipales').then(res => res.json())
-
-    const parsedValues = values.map(({ casa: { compra, venta, agencia } }) => ({
-      compra: parseFloat(compra.replace(',', '.')),
-      venta: parseFloat(venta.replace(',', '.')),
-      agencia,
-    }))
-
-    setDolar(parsedValues[0])
-  }
 
   const onChange = e => {
     e.preventDefault()
@@ -43,31 +33,13 @@ const App = () => {
     })
   }
 
-  const compute = amount => {
-    let { compra: price } = dolar
-    const parsedAmount = parseFloat(amount)
-    const parsedPrice = price
-
-    const preTotal = isNaN(parsedPrice * parsedAmount) ? 0 : parsedPrice * parsedAmount
-    const firstTax = isNaN(preTotal * 0.3) ? 0 : preTotal * 0.3
-    const secondTax = isNaN(preTotal * 0.35) ? 0 : preTotal * 0.35
-    const finalAmount = isNaN(preTotal + firstTax + secondTax) ? 0 : preTotal + firstTax + secondTax
-
-    setResult({
-      preTotal: preTotal.toLocaleString([], { currency: 'ARS', maximumFractionDigits: 2 }),
-      firstTax: firstTax.toLocaleString([], { currency: 'ARS', maximumFractionDigits: 2 }),
-      secondTax: secondTax.toLocaleString([], { currency: 'ARS', maximumFractionDigits: 2 }),
-      finalAmount: finalAmount.toLocaleString([], { currency: 'ARS', maximumFractionDigits: 2 }),
-    })
-  }
-
   return (
     <div className="w-full h-screen bg-gray-300">
       <main className="flex justify-center items-center">
-        <div className="w-4/5 sm:w-2/3 bg-white mt-32">
+        <div className="w-4/5 sm:w-2/3 bg-white mt-32 p-10">
           <p className="text-center text-3xl m-4">
             <span className="text-green-600">
-              {dolar.compra || 0} <span className="text-xl">ARS</span>
+              {dollarData.bid || 0} <span className="text-xl">ARS</span>
             </span>{' '}
             = 1 <span className="text-xl">USD</span>
           </p>
@@ -85,11 +57,11 @@ const App = () => {
             Pre-total <span className="font-bold">{preTotal}</span> <span className="text-sm">ARS</span>
           </p>
           <p className="text-center text-xl text-gray-700">
-            Impuesto PAIS <span className="text-sm">30%</span> <span className="font-bold">{firstTax}</span>{' '}
+            Impuesto PAIS <span className="text-sm">30%</span> <span className="font-bold">{paisTax}</span>{' '}
             <span className="text-sm">ARS</span>
           </p>
           <p className="text-center text-xl text-gray-700">
-            Impuesto AFIP <span className="text-sm">35%</span> <span className="font-bold">{secondTax}</span>{' '}
+            Impuesto AFIP <span className="text-sm">35%</span> <span className="font-bold">{afipTax}</span>{' '}
             <span className="text-sm">ARS</span>
           </p>
           <p className="text-center text-4xl text-green-700">
