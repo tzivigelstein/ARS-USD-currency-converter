@@ -35,8 +35,8 @@ const App = () => {
 
   return (
     <div className="w-full h-screen bg-gray-300">
-      <main className="flex justify-center items-center">
-        <div className="w-4/5 sm:w-2/3 bg-white mt-32 py-10">
+      <main className="flex justify-center items-center px-4">
+        <div className="w-full sm:w-2/3 bg-white mt-32 py-10">
           <p className="text-center text-3xl m-4">
             <span className="text-green-600">
               {dollarData.bid || 0} <span className="text-xl">ARS</span>
