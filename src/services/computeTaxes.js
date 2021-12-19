@@ -5,8 +5,6 @@ const computeTaxes = ({ amount, dollarData }) => {
   let { bid: dollarPrice } = dollarData
   const parsedAmount = parseFloat(amount)
 
-  console.log({ parsedAmount, dollarPrice })
-
   const preTotalResult = dollarPrice * parsedAmount
   const paisTaxResult = preTotalResult * PAIS_TAX
   const afipTaxResult = preTotalResult * AFIP_TAX
