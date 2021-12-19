@@ -36,7 +36,7 @@ const App = () => {
   return (
     <div className="w-full h-screen bg-gray-300">
       <main className="flex justify-center items-center">
-        <div className="w-4/5 sm:w-2/3 bg-white mt-32 p-10">
+        <div className="w-4/5 sm:w-2/3 bg-white mt-32 py-10">
           <p className="text-center text-3xl m-4">
             <span className="text-green-600">
               {dollarData.bid || 0} <span className="text-xl">ARS</span>
