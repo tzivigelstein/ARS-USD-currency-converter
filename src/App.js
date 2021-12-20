@@ -40,7 +40,7 @@ const App = () => {
   return (
     <div className="w-full h-screen bg-gray-300">
       <main className="flex justify-center items-center px-4">
-        <div className="w-full sm:w-2/3 bg-white mt-32 py-10">
+        <div className="w-full sm:w-2/3 bg-white mt-32 py-10 rounded-2xl">
           <div className="text-3xl m-4 flex items-center justify-center">
             {loading ? (
               <Spinner />
