@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import getDollarPrice from './services/getDollarPrice'
 import computeTaxes from './services/computeTaxes'
+import Spinner from './components/Spinner'
 
 const App = () => {
   const [dollarData, setDolarData] = useState({})
   const [toConvert, setToConvert] = useState({
     amount: 0,
   })
+  const [loading, setLoading] = useState(false)
 
   const resultInitialState = { preTotal: 0, paisTax: 0, afipTax: 0, finalAmount: 0 }
   const [result, setResult] = useState(resultInitialState)
@@ -16,9 +18,11 @@ const App = () => {
 
   useEffect(() => {
     if (Object.keys(dollarData).length === 0) {
+      setLoading(true)
       Promise.resolve(getDollarPrice())
         .then(data => setDolarData(data))
         .catch(err => console.log(err))
+        .finally(() => setLoading(false))
     } else if (amount !== 0) {
       setResult(computeTaxes({ amount, dollarData }))
     }
@@ -37,12 +41,18 @@ const App = () => {
     <div className="w-full h-screen bg-gray-300">
       <main className="flex justify-center items-center px-4">
         <div className="w-full sm:w-2/3 bg-white mt-32 py-10">
-          <p className="text-center text-3xl m-4">
-            <span className="text-green-600">
-              {dollarData.bid || 0} <span className="text-xl">ARS</span>
-            </span>{' '}
-            = 1 <span className="text-xl">USD</span>
-          </p>
+          <div className="text-center text-3xl m-4 flex items-center justify-center">
+            {loading ? (
+              <Spinner />
+            ) : (
+              <span className="text-green-600">
+                {dollarData.bid || 0} <span className="text-xl">ARS</span>
+              </span>
+            )}
+            <span style={{ marginLeft: '1ch' }}>
+              = 1 <span className="text-xl">USD</span>
+            </span>
+          </div>
           <form className="flex justify-center items-center">
             <input
               name="amount"
