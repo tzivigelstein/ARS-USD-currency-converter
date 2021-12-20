@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import getDollarPrice from './services/getDollarPrice'
 import computeTaxes from './services/computeTaxes'
 import Spinner from './components/Spinner'
@@ -9,6 +9,8 @@ const App = () => {
     amount: 0,
   })
   const [loading, setLoading] = useState(false)
+
+  const inputRef = useRef()
 
   const resultInitialState = { preTotal: 0, paisTax: 0, afipTax: 0, finalAmount: 0 }
   const [result, setResult] = useState(resultInitialState)
@@ -37,6 +39,11 @@ const App = () => {
     })
   }
 
+  const handleFormSubmit = e => {
+    e.preventDefault()
+    inputRef.current.blur()
+  }
+
   return (
     <div className="w-full h-screen bg-gray-300">
       <main className="flex justify-center items-center px-4">
@@ -53,14 +60,14 @@ const App = () => {
               = 1 <span className="text-xl">USD</span>
             </span>
           </div>
-          <form className="flex justify-center items-center">
+          <form onSubmit={handleFormSubmit} className="flex justify-center items-center">
             <input
+              ref={inputRef}
               name="amount"
               onChange={onChange}
               value={amount}
               type="number"
               className="w-2/3 py-2 px-3 text-gray-700 bg-gray-200"
-              placeholder="Monto a convertir"
             />
           </form>
           <p className="text-center text-xl text-gray-700">
