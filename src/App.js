@@ -41,7 +41,7 @@ const App = () => {
     <div className="w-full h-screen bg-gray-300">
       <main className="flex justify-center items-center px-4">
         <div className="w-full sm:w-2/3 bg-white mt-32 py-10">
-          <div className="text-center text-3xl m-4 flex items-center justify-center">
+          <div className="text-3xl m-4 flex items-center justify-center">
             {loading ? (
               <Spinner />
             ) : (
@@ -64,18 +64,18 @@ const App = () => {
             />
           </form>
           <p className="text-center text-xl text-gray-700">
-            Pre-total <span className="font-bold">{preTotal}</span> <span className="text-sm">ARS</span>
+            Pre-total <span className="font-bold ml-4">{preTotal}</span> <span className="text-sm">ARS</span>
           </p>
           <p className="text-center text-xl text-gray-700">
-            Impuesto PAIS <span className="text-sm">30%</span> <span className="font-bold">{paisTax}</span>{' '}
+            Impuesto PAIS <span className="text-sm">30%</span> <span className="font-bold ml-4">{paisTax}</span>{' '}
             <span className="text-sm">ARS</span>
           </p>
           <p className="text-center text-xl text-gray-700">
-            Impuesto AFIP <span className="text-sm">35%</span> <span className="font-bold">{afipTax}</span>{' '}
+            Impuesto AFIP <span className="text-sm">35%</span> <span className="font-bold ml-4">{afipTax}</span>{' '}
             <span className="text-sm">ARS</span>
           </p>
           <p className="text-center text-4xl text-green-700">
-            Total <span className="font-bold">{finalAmount}</span> <span className="text-xl">ARS</span>
+            Total <span className="font-bold ml-4">{finalAmount}</span> <span className="text-xl">ARS</span>
           </p>
         </div>
       </main>
