@@ -1,6 +1,6 @@
 # Getting Started with Currencty converter
 
-[Demo here](https://compras-exterior.netlify.app)
+Check project [Production here](https://compras-exterior.netlify.app)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
