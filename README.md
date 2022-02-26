@@ -1,4 +1,4 @@
-# Getting Started with Currencty converter
+# Getting Started with Currency converter
 
 Check project [Production here](https://compras-exterior.netlify.app)
 
