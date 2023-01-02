@@ -63,6 +63,7 @@ const App = () => {
           <form onSubmit={handleFormSubmit} className="flex justify-center items-center">
             <input
               ref={inputRef}
+              autoFocus={true}
               name="amount"
               onChange={onChange}
               value={amount}
